@@ -1,0 +1,76 @@
+Installation instructions for a CalNet developer
+Chris Beliveau	- 10/31/2026
+
+This is in initial version for this project.  Keep me informed to update this if things don't work as described.
+
+CalNet for developement is different than a workstation because we use a local database vs the shared network.
+Also there are flags in the registry to ignore devices. A development flag opens up dialogs the normal user does not see.
+
+Prerequisites
+
+Your computer needs the following products.
+
+1)	Microsoft Visual Studio Community 2026.  This is a free version for students, 
+	it appears to have enough for this project without going to the Pro subscription.
+		
+2) 	MS Office 365.  This has the MS Access database app and services. 
+	Previously a run time MSI was needed, not any more if this is installed. 
+	
+3) 	Crystal Reports 2025.  You don't really need this product, a runtime library is included.
+	We are down to 2 defined reports now in the Reports folder. Cert-ISO.rpt and cert-normal.rpt from a starting list of a dozen.
+	But if you want to modify/create a new report, we have one paid version on the CalNet dev station.
+	I have the licence key in its installation folder, but you should probably pay $500 or so to SAP.
+	Contact info is in D:\Crystal Reports 2025
+	
+4)	Tera Term. This is a freeware product for sniffing to serial COM ports.  I use it all the time to verify connection.
+	https://sourceforge.net/projects/tera-term/
+	
+	
+Install procedure 
+
+This is a one time process.  Install the prerequistes first.
+
+1) Copy the contents of this folder into c:\Vistalabs  (plural)
+
+2) Install the Crystal Reports run time library - CRRuntime_64bit_13_0_38.msi
+
+4) Install the I2C MCC Usb/Serial driver.   C:\Vistalabs\Drivers\MCC_USB_VCP_DriverCv6_7.  Use the x64.executable installer.
+
+5) Use the registry editor to load the file - CalNet Registry settings for Development.registry
+
+Items 6/7 may change as this progresses. For now we need to assign the COM ports to a 
+6) 	Connect the MCC-USB device.  Use device manager - advanced settings to associate the com port that is recognized into the registry key - 
+	Computer\HKEY_CURRENT_USER\Software\VistaLabs\CalNET\ComPortOvation.  Either change the registry or use the device manager to modify the com port to match.
+	
+7)	Connect a USB2 device into the computer.  Repeat step 6 for the key - ComPortOvatoion2.
+
+Deployment procedure
+
+This process is done for each new version of CalNet you publish.
+
+1)	In Visual Studio, open the solution file CalNet.sln.  Perform a Build-Clean, then Build-Rebuild CalNet.  It should build without errors.
+
+2) Perform a Build-Publish.  Specify the publish location as C:\Vistalabs\CalNet.  An installer will be created there.
+
+3) Use System-Apps to uninstall any other CalNet that may be installed.   
+
+4) Run setup.exe out of C:\Vistalabs\CalNet.   
+
+You are done.  CalNet should start.  I have an icon in the setup\desktop folder that may work, if not you can pin to the desktop or figure out where Windows put it.
+
+
+Miscellaneous stuff.
+
+There is a desktop folder with lots of useful things I use.  Use them at your disgression.
+
+In the drivers folder I have a certified FTDI driver I've found that works for most USB-Serial gadgets.  Don't trust anything serial if it does not have an FTDI chip in it!!!
+
+There is also a folder for the HP LaserJet Pro we use in the lab.  The registry key Printer Name is blank, you printer must be the default printer, otherwise you need to use the printer 
+name Windows assigns it.  We wasted half a day to figure it out.  The Crystal Report tool had problems finding a printer.
+
+
+
+
+
+
+	
